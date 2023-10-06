@@ -2,8 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EasyChat" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:colorSecondary" tools:targetApi="n_mr1">@color/secondary</item>
     </style>
 
     <style name="Theme.EasyChat" parent="Base.Theme.EasyChat" />
+
+    <style name="progressBarTheme">
+        <item name="colorAccent">@color/secondary</item> <!-- Whatever color you want-->
+    </style>
 </resources>

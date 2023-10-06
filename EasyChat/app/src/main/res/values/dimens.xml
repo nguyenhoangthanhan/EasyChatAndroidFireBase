@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_image_phone_android">150dp</dimen>
+    <dimen name="spacing_small_0.08">0.08</dimen>
+    <dimen name="text_size_big_1">24sp</dimen>
+    <dimen name="padding_normal_12dp">12dp</dimen>
+    <dimen name="padding_normal_20dp">20dp</dimen>
+    <dimen name="margin_normal_12dp">12dp</dimen>
+    <dimen name="corner_normal_12dp">12dp</dimen>
+    <dimen name="elevation_normal_6dp">6dp</dimen>
+    <dimen name="corner_rounded_40dp">40dp</dimen>
+    <dimen name="layout_margin_normal_20dp">20dp</dimen>
+</resources>

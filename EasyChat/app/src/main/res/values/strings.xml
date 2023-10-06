@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EasyChat</string>
+    <string name="developed_by_nhta">Developed by NHTA</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="mobile">mobile</string>
+    <string name="set_otp">Set OTP</string>
 </resources>
