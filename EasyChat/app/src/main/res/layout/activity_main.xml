@@ -26,6 +26,7 @@
             android:textSize="@dimen/text_size_normal_24sp" />
         
         <ImageButton
+            android:id="@+id/btn_main_search"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentEnd="true"
