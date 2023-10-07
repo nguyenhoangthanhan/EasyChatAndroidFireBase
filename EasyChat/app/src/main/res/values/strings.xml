@@ -11,4 +11,6 @@
     <string name="enter_your_username">Enter your username</string>
     <string name="username">Username</string>
     <string name="let_me_in">Let me in</string>
+    <string name="chats">Chats</string>
+    <string name="profiles">Profiles</string>
 </resources>

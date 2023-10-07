@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.nguyenhoangthanhan.easychat.util.FirebaseUtil
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,9 +13,14 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             run {
-                startActivity(Intent(this, LoginPhoneNumberActivity::class.java))
+                if(FirebaseUtil.isLoggedIn()){
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                else{
+                    startActivity(Intent(this, LoginPhoneNumberActivity::class.java))
+                }
                 finish()
             }
-        }, 3000)
+        }, 1000)
     }
 }

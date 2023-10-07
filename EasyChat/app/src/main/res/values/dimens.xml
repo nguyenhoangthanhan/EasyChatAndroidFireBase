@@ -10,4 +10,5 @@
     <dimen name="elevation_normal_6dp">6dp</dimen>
     <dimen name="corner_rounded_40dp">40dp</dimen>
     <dimen name="layout_margin_normal_20dp">20dp</dimen>
+    <dimen name="text_size_normal_24sp">24sp</dimen>
 </resources>
