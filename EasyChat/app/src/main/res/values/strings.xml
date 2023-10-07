@@ -4,4 +4,11 @@
     <string name="enter_mobile_number">Enter mobile number</string>
     <string name="mobile">mobile</string>
     <string name="set_otp">Set OTP</string>
+    <string name="text_send_otp">Enter Otp send to your phone number</string>
+    <string name="otp">OTP</string>
+    <string name="next">Next</string>
+    <string name="resend_otp_text">Resend OTP in 30 sec</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="username">Username</string>
+    <string name="let_me_in">Let me in</string>
 </resources>

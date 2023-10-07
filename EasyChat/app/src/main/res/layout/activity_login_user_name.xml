@@ -10,7 +10,7 @@
     android:background="@color/white"
     android:padding="@dimen/padding_normal_20dp"
     android:weightSum="100"
-    tools:context=".LoginPhoneNumberActivity">
+    tools:context=".LoginUserNameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:backgroundTint="@color/primary"
+            android:backgroundTint="@color/light_gray"
             android:background="@drawable/circular_bg"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -33,9 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:text="1"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:text="1" />
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -58,7 +58,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:backgroundTint="@color/light_gray"
+            android:backgroundTint="@color/primary"
             android:background="@drawable/circular_bg"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -78,7 +78,7 @@
     </LinearLayout>
 
     <ImageView
-        android:src="@drawable/phone_icon"
+        android:src="@drawable/person_icon"
         android:layout_width="@dimen/size_image_phone_android"
         android:layout_height="@dimen/size_image_phone_android"
         android:layout_weight="20"
@@ -89,7 +89,7 @@
         android:textStyle="bold"
         android:letterSpacing="0.08"
         android:layout_weight="5"
-        android:text="@string/enter_mobile_number"
+        android:text="@string/enter_your_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -100,19 +100,12 @@
         android:layout_weight="5"
         android:orientation="horizontal">
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/login_country_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:ccp_showFlag="false"
-            app:ccp_showNameCode="false"/>
-
         <EditText
-            android:id="@+id/edt_login_mobile_number"
+            android:id="@+id/edt_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_normal_12dp"
-            android:hint="@string/mobile"
+            android:hint="@string/username"
             android:inputType="phone"
             android:layout_margin="@dimen/margin_normal_12dp"
             android:background="@drawable/edit_text_rounded_corner"
@@ -127,11 +120,11 @@
         android:layout_height="100dp">
 
         <Button
-            android:id="@+id/btn_send_otp"
+            android:id="@+id/btn_let_me_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded_corner"
-            android:text="@string/set_otp"
+            android:text="@string/let_me_in"
             />
 
         <ProgressBar
