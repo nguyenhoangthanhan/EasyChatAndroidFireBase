@@ -7,4 +7,7 @@
     <color name="primary">#FF4E5A</color>
     <color name="secondary">#FDE345</color>
 
+    <color name="chat_color_sender">#1E88E5</color>
+    <color name="chat_color_receiver">#7CB342</color>
+
 </resources>

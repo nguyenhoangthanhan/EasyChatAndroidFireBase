@@ -39,7 +39,7 @@ class LoginUserNameActivity : AppCompatActivity() {
         phoneNumber = intent.extras?.getString("phone").toString()
 
         setInProgress(true)
-        FirebaseUtil.currentUserDetails().get().addOnCompleteListener{
+        FirebaseUtil.currentUserDetails()?.get()?.addOnCompleteListener{
             setInProgress(false)
             if (it.isSuccessful){
                 Log.d(TAG, "#initData.isSuccessful = true")
@@ -85,7 +85,7 @@ class LoginUserNameActivity : AppCompatActivity() {
             userModel = UserModel(phoneNumber, username, Timestamp.now(), FirebaseUtil.currentUserId())
         }
 
-        FirebaseUtil.currentUserDetails().set(userModel!!).addOnCompleteListener {
+        FirebaseUtil.currentUserDetails()?.set(userModel!!)?.addOnCompleteListener {
             setInProgress(false)
             if (it.isSuccessful){
                 val intent = Intent(this@LoginUserNameActivity, MainActivity::class.java)

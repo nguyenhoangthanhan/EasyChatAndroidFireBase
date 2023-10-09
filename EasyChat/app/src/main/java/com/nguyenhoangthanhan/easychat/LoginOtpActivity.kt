@@ -101,7 +101,7 @@ class LoginOtpActivity : AppCompatActivity() {
             setInProgress(false)
             if (it.isSuccessful){
                 val intent = Intent(this@LoginOtpActivity, LoginUserNameActivity::class.java)
-                intent.putExtra("phone", phoneNumber    )
+                intent.putExtra("phone", phoneNumber)
                 startActivity(intent)
             }
             else{

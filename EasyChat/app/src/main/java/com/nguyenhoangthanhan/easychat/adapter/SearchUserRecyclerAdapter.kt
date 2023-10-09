@@ -1,6 +1,5 @@
 package com.nguyenhoangthanhan.easychat.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.nguyenhoangthanhan.easychat.ChatActivity
 import com.nguyenhoangthanhan.easychat.databinding.SearchUserRecyclerRowBinding
 import com.nguyenhoangthanhan.easychat.model.UserModel
+import com.nguyenhoangthanhan.easychat.util.AndroidUtil
 import com.nguyenhoangthanhan.easychat.util.FirebaseUtil
 
 
@@ -33,6 +33,7 @@ class SearchUserRecyclerAdapter(
                 binding.root.context.startActivity(
                     Intent(binding.root.context, ChatActivity::class.java).also {
                         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        AndroidUtil.passUserModelAsIntent(it, model)
                     })
             }
         }
