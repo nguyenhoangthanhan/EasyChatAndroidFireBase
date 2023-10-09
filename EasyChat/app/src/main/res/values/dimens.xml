@@ -4,6 +4,7 @@
     <dimen name="spacing_small_0.08">0.08</dimen>
     <dimen name="text_size_big_1">24sp</dimen>
     <dimen name="padding_small_4dp">4dp</dimen>
+    <dimen name="padding_small_8dp">8dp</dimen>
     <dimen name="padding_normal_12dp">12dp</dimen>
     <dimen name="padding_normal_20dp">20dp</dimen>
     <dimen name="margin_normal_12dp">12dp</dimen>

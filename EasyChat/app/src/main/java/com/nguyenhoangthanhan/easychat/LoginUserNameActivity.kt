@@ -82,7 +82,7 @@ class LoginUserNameActivity : AppCompatActivity() {
             userModel?.username = username
         }
         else{
-            userModel = UserModel(phoneNumber, username, Timestamp.now())
+            userModel = UserModel(phoneNumber, username, Timestamp.now(), FirebaseUtil.currentUserId())
         }
 
         FirebaseUtil.currentUserDetails().set(userModel!!).addOnCompleteListener {
