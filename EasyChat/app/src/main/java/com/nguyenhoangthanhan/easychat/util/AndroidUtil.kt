@@ -22,6 +22,7 @@ object AndroidUtil {
         intent.putExtra("username", userModel?.username)
         intent.putExtra("phone", userModel?.phone)
         intent.putExtra("userId", userModel?.userId)
+        intent.putExtra("fcmToken", userModel?.fcmToken)
     }
 
     fun getUserModelFromIntent(intent: Intent): UserModel{
@@ -29,6 +30,7 @@ object AndroidUtil {
         userModel.username = intent.getStringExtra("username")
         userModel.phone = intent.getStringExtra("phone")
         userModel.userId = intent.getStringExtra("userId")
+        userModel.fcmToken = intent.getStringExtra("fcmToken")
         return userModel
     }
 

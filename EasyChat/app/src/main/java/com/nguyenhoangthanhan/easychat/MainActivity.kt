@@ -8,6 +8,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.nguyenhoangthanhan.easychat.databinding.ActivityMainBinding
 import com.nguyenhoangthanhan.easychat.fragment.ChatFragment
 import com.nguyenhoangthanhan.easychat.fragment.ProfileFragment
+import com.nguyenhoangthanhan.easychat.util.FirebaseUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             if (task.isSuccessful){
                 val token = task.result
                 Log.d(TAG, token)
+                FirebaseUtil.currentUserDetails()?.update("fcmToken", token)
             }
         }
     }

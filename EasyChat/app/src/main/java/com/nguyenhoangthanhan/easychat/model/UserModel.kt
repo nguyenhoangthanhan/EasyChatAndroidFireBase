@@ -11,11 +11,10 @@ class UserModel {
 
     constructor()
     constructor(phone: String?, username: String?
-                , createdTimestamp: Timestamp?, userId: String?, fcmToken: String?) {
+                , createdTimestamp: Timestamp?, userId: String?) {
         this.phone = phone
         this.username = username
         this.createdTimestamp = createdTimestamp
         this.userId = userId
-        this.fcmToken = fcmToken
     }
 }

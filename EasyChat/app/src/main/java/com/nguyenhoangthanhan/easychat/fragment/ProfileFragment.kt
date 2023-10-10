@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.messaging.FirebaseMessaging
 import com.nguyenhoangthanhan.easychat.SplashActivity
 import com.nguyenhoangthanhan.easychat.databinding.FragmentProfileBinding
 import com.nguyenhoangthanhan.easychat.model.UserModel
@@ -109,10 +110,15 @@ class ProfileFragment : Fragment() {
             updateBtnClick()
         }
         binding.btnLogout.setOnClickListener {
-            FirebaseUtil.logout()
-            startActivity(Intent(requireContext(), SplashActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            })
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    FirebaseUtil.logout()
+                    startActivity(Intent(requireContext(), SplashActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
+                }
+            }
+
         }
         binding.imgProfileAvatar.setOnClickListener {
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)

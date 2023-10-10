@@ -126,7 +126,9 @@ class LoginOtpActivity : AppCompatActivity() {
         timer.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
                 timeOutSeconds--
-                binding.tvResendOtp.text = "Resend OTP in $timeOutSeconds seconds"
+                runOnUiThread {
+                    binding.tvResendOtp.text = "Resend OTP in $timeOutSeconds seconds"
+                }
                 if(timeOutSeconds <= 0){
                     timeOutSeconds = 60L
                     timer.cancel()
