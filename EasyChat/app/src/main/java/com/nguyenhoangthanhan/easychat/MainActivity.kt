@@ -2,12 +2,16 @@ package com.nguyenhoangthanhan.easychat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.nguyenhoangthanhan.easychat.databinding.ActivityMainBinding
 import com.nguyenhoangthanhan.easychat.fragment.ChatFragment
 import com.nguyenhoangthanhan.easychat.fragment.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity_TAG"
 
     private lateinit var binding: ActivityMainBinding
 
@@ -50,5 +54,16 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bottomNavigation.selectedItemId = R.id.menu_chat
 
+        getFCMToken()
+
+    }
+
+    private fun getFCMToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val token = task.result
+                Log.d(TAG, token)
+            }
+        }
     }
 }

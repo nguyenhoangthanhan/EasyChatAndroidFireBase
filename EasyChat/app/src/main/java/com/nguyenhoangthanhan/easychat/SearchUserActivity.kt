@@ -73,7 +73,7 @@ class SearchUserActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (adapter != null){
-            adapter?.startListening()
+            adapter?.notifyDataSetChanged()
         }
     }
 

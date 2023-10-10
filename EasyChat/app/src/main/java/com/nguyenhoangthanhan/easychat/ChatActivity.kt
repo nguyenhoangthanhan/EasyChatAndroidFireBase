@@ -59,6 +59,7 @@ class ChatActivity : AppCompatActivity() {
                     chatRoomId,
                     listOf(FirebaseUtil.currentUserId(), otherUser.userId),
                     Timestamp.now(),
+                    "",
                     ""
                 )
                 FirebaseUtil.getChatRoomReference(chatRoomId).set(chatRoomModel!!)
@@ -68,6 +69,17 @@ class ChatActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.tvOtherUsername.text = otherUser.username
+
+        FirebaseUtil.getOtherProfilePicStorageRef(otherUser.userId)?.downloadUrl?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val uri = task.result
+                AndroidUtil.setProfilePic(
+                    binding.root.context,
+                    uri,
+                    binding.layoutPickProfile.profilePicImageView
+                )
+            }
+        }
 
         setUpChatRecyclerView()
     }
@@ -107,6 +119,7 @@ class ChatActivity : AppCompatActivity() {
     private fun sendMessageToUser(message: String) {
         chatRoomModel?.lastMessageTimeStamp = Timestamp.now()
         chatRoomModel?.lastMessageSenderId = FirebaseUtil.currentUserId().toString()
+        chatRoomModel?.lastMessage = message
         FirebaseUtil.getChatRoomReference(chatRoomId).set(chatRoomModel!!)
 
         val chatMessageModel = ChatMessageModel(FirebaseUtil.currentUserId().toString(), message, Timestamp.now())

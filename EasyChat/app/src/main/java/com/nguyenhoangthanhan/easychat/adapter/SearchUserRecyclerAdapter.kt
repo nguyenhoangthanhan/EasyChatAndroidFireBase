@@ -29,6 +29,18 @@ class SearchUserRecyclerAdapter(
             if (model.userId?.equals(FirebaseUtil.currentUserId()) == true){
                 binding.tvUsername.text = (model.username + " (Me)")
             }
+
+            FirebaseUtil.getOtherProfilePicStorageRef(model.userId)?.downloadUrl?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uri = task.result
+                    AndroidUtil.setProfilePic(
+                        binding.root.context,
+                        uri,
+                        binding.imgAvatarUser
+                    )
+                }
+            }
+
             binding.root.setOnClickListener {
                 binding.root.context.startActivity(
                     Intent(binding.root.context, ChatActivity::class.java).also {
