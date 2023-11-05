@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.messaging.FirebaseMessaging
@@ -25,7 +26,13 @@ class ProfileFragment : Fragment() {
 
     private val TAG = "ProfileFragment_TAG"
 
-    private lateinit var binding: FragmentProfileBinding
+    private var currentImage = "currentImageGetFromGallery"
+
+
+    private var changeImageFlag = "change_image_flag"
+    private var changeImage = false
+
+    private var binding: FragmentProfileBinding? = null
 
     private var currentUserModel: UserModel? = null
 
@@ -36,6 +43,13 @@ class ProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState != null) {
+            //Retrieve the value from the bundle then assign it to selectedImageUri global variable
+            selectedImageUri = savedInstanceState.getString(currentImage)?.toUri()
+            changeImage = savedInstanceState.getBoolean(changeImageFlag)
+            Log.d(TAG, "#onCreate. savedInstanceState.getBoolean(changeImageFlag) = $changeImage")
+        }
+
         imagePickLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->
@@ -43,7 +57,15 @@ class ProfileFragment : Fragment() {
                 val data = result.data
                 if (data != null && data.data != null) {
                     selectedImageUri = data.data
-                    context?.let { AndroidUtil.setProfilePic(it, selectedImageUri, binding.imgProfileAvatar) }
+                    Log.d(TAG, "#onCreate.setSelectedImageUri = $selectedImageUri")
+                    context?.let {
+                        Log.d(TAG, "#onCreate.imagePickLauncher.AndroidUtil.setProfilePic")
+                        AndroidUtil.setProfilePic(
+                            it,
+                            selectedImageUri,
+                            binding?.imgProfileAvatar
+                        )
+                    }
                 }
             }
         }
@@ -60,7 +82,7 @@ class ProfileFragment : Fragment() {
         initView()
         initEvents()
 
-        return binding.root
+        return binding?.root!!
     }
 
     private fun initData() {
@@ -72,11 +94,26 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getUserData(){
+        Log.d(TAG, "#getUserData#start")
         setInProgress(true)
         FirebaseUtil.getCurrentProfilePicStorageRef()?.downloadUrl?.addOnCompleteListener { task ->
             if (task.isSuccessful){
+                Log.d(TAG, "#getUserData.AndroidUtil.setProfilePic")
                 val uri = task.result
-                AndroidUtil.setProfilePic(requireContext(), uri, binding.imgProfileAvatar)
+                AndroidUtil.setProfilePic(activity?.applicationContext, uri, binding?.imgProfileAvatar)
+
+                if (changeImage){
+                    Log.d(TAG, "getUserData.changeImage = true")
+                    Log.d(TAG, "getUserData.changeImage.selectedImageUri = $selectedImageUri")
+                    context?.let {
+                        Log.d(TAG, "#onCreate.savedInstanceState.AndroidUtil.setProfilePic")
+                        AndroidUtil.setProfilePic(
+                            it,
+                            selectedImageUri,
+                            binding?.imgProfileAvatar
+                        )
+                    }
+                }
             }
         }
 
@@ -85,31 +122,32 @@ class ProfileFragment : Fragment() {
             if (it.isSuccessful) {
                 Log.d(TAG, "#initData.isSuccessful = true")
                 currentUserModel = it.result.toObject(UserModel::class.java)
-                Log.d(TAG, "#initData.it.result.exists() = " + it.result.exists())
-                Log.d(TAG, "#initData.it.result.toString() = " + it.result.toString())
-                Log.d(
-                    TAG, "#initData.it.result.toObject(UserModel::class.java) = $currentUserModel"
-                            + it.result.toObject(UserModel::class.java)
-                )
+//                Log.d(TAG, "#initData.it.result.exists() = " + it.result.exists())
+//                Log.d(TAG, "#initData.it.result.toString() = " + it.result.toString())
+//                Log.d(
+//                    TAG, "#initData.it.result.toObject(UserModel::class.java) = $currentUserModel"
+//                            + it.result.toObject(UserModel::class.java)
+//                )
                 if (currentUserModel != null) {
-                    Log.d(
-                        TAG,
-                        "#initData.currentUserModel.toString() = " + currentUserModel.toString()
-                    )
-                    binding.edtProfileUsername.setText(currentUserModel?.username)
-                    binding.edtProfilePhone.setText(currentUserModel?.phone)
+//                    Log.d(
+//                        TAG,
+//                        "#initData.currentUserModel.toString() = " + currentUserModel.toString()
+//                    )
+                    binding?.edtProfileUsername?.setText(currentUserModel?.username)
+                    binding?.edtProfilePhone?.setText(currentUserModel?.phone)
                 }
             } else {
                 Log.d(TAG, "#initData.isSuccessful = false")
             }
         }
+        Log.d(TAG, "#getUserData#end")
     }
 
     private fun initEvents() {
-        binding.btnProfileUpdate.setOnClickListener {
+        binding?.btnProfileUpdate?.setOnClickListener {
             updateBtnClick()
         }
-        binding.btnLogout.setOnClickListener {
+        binding?.btnLogout?.setOnClickListener {
             FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     FirebaseUtil.logout()
@@ -120,7 +158,7 @@ class ProfileFragment : Fragment() {
             }
 
         }
-        binding.imgProfileAvatar.setOnClickListener {
+        binding?.imgProfileAvatar?.setOnClickListener {
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)
                 .createIntent { intent ->
                     imagePickLauncher?.launch(intent)
@@ -129,9 +167,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateBtnClick() {
-        val newUsername = binding.edtProfileUsername.text.toString()
+        val newUsername = binding?.edtProfileUsername?.text.toString()
         if (newUsername.isEmpty() || newUsername.length < 3) {
-            binding.edtProfileUsername.error = "Username length should be at least 3 chars"
+            binding?.edtProfileUsername?.error = "Username length should be at least 3 chars"
             return
         }
         currentUserModel?.username = newUsername
@@ -162,11 +200,17 @@ class ProfileFragment : Fragment() {
 
     private fun setInProgress(inProgress: Boolean) {
         if (inProgress) {
-            binding.progressBarProfile.visibility = View.VISIBLE
-            binding.btnLogout.visibility = View.GONE
+            binding?.progressBarProfile?.visibility = View.VISIBLE
+            binding?.btnLogout?.visibility = View.GONE
         } else {
-            binding.progressBarProfile.visibility = View.GONE
-            binding.btnLogout.visibility = View.VISIBLE
+            binding?.progressBarProfile?.visibility = View.GONE
+            binding?.btnLogout?.visibility = View.VISIBLE
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(currentImage, selectedImageUri.toString());
+        outState.putBoolean(changeImageFlag, true);
     }
 }

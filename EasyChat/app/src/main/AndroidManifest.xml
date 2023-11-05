@@ -46,7 +46,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".service.FCMNotificationService" android:exported="false">
             <intent-filter>

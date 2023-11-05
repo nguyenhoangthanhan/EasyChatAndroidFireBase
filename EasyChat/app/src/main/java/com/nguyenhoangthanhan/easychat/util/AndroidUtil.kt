@@ -34,7 +34,11 @@ object AndroidUtil {
         return userModel
     }
 
-    fun setProfilePic(context: Context, uri: Uri?, imageView: ImageView){
-        Glide.with(context).load(uri).apply(RequestOptions.circleCropTransform()).into(imageView)
+    fun setProfilePic(context: Context?, uri: Uri?, imageView: ImageView?){
+        context?.let {
+            if (imageView != null) {
+                Glide.with(it).load(uri).apply(RequestOptions.circleCropTransform()).into(imageView)
+            }
+        }
     }
 }

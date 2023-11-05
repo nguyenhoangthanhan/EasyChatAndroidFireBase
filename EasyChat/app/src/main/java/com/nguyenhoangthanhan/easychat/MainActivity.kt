@@ -14,16 +14,27 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity_TAG"
 
+    private var mSelectedNavItem = 1;
+    private var CURRENT_SELECTED_FRAGMENT = "current fragment"
+
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var chatFragment:ChatFragment
-    private lateinit var profileFragment: ProfileFragment
+    private var chatFragment:ChatFragment = ChatFragment()
+    private var profileFragment: ProfileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "#onCreate")
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        if (savedInstanceState != null) {
+            //Retrieve the value from the bundle then assign it to mSelectedItem global variable
+            val retrieveSelectedNavItem = savedInstanceState.getInt(CURRENT_SELECTED_FRAGMENT);
+            mSelectedNavItem = retrieveSelectedNavItem;
+            Log.d(TAG, "#onCreate.retrieveSelectedNavItem = $retrieveSelectedNavItem")
+        }
 
         initData()
         initView()
@@ -35,8 +46,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        chatFragment = ChatFragment()
-        profileFragment = ProfileFragment()
     }
 
     private fun initEvents() {
@@ -46,14 +55,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener {
             if (it.itemId == R.id.menu_chat){
+                mSelectedNavItem = 1
                 supportFragmentManager.beginTransaction().replace(R.id.container, chatFragment).commit()
             }
             else if (it.itemId == R.id.menu_profile){
+                mSelectedNavItem = 2
                 supportFragmentManager.beginTransaction().replace(R.id.container, profileFragment).commit()
             }
             return@setOnItemSelectedListener true
         }
-        binding.bottomNavigation.selectedItemId = R.id.menu_chat
+        if (mSelectedNavItem == 1){
+            binding.bottomNavigation.selectedItemId = R.id.menu_chat
+        }
+        else{
+            binding.bottomNavigation.selectedItemId = R.id.menu_profile
+        }
 
         getFCMToken()
 
@@ -67,5 +83,35 @@ class MainActivity : AppCompatActivity() {
                 FirebaseUtil.currentUserDetails()?.update("fcmToken", token)
             }
         }
+    }
+
+    override fun onStart() {
+        Log.d(TAG, "#onStart")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.d(TAG, "#onResume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d(TAG, "#onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d(TAG, "#onStop")
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "#onDestroy")
+        super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(CURRENT_SELECTED_FRAGMENT, mSelectedNavItem);
     }
 }
